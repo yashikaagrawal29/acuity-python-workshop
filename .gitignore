@@ -23,3 +23,12 @@ import_report.json
 
 # OS
 .DS_Store
+
+# Editor
+.vscode/
+
+# Rendered decks — regenerate from deck/*.md with marp (PDFs in out/ are kept)
+*.html
+
+# Local scratch
+/test.py
