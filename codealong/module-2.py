@@ -1,14 +1,11 @@
 """Module 2 — Data Structures, Files & Modules · CODE-ALONG
 
-Covers every Module-2 slide. Most concepts are shown two ways — a SIMPLE way,
-then the idiomatic upgrade — so the jump is the lesson. Run it, or copy a block
-per slide:    python3 codealong/module-2.py
-§1-§6 = base slides 13-18 · §7-§10 = senior-track. Stdlib only.
+Most concepts shown two ways — a SIMPLE way, then the idiomatic upgrade — so the
+jump is the lesson. Run it, or copy a block per slide:
+    python3 codealong/module-2.py
+Covers base slides 13-18. Stdlib only.
 """
-import csv, io, json, logging, os
-from collections import Counter, defaultdict
-from contextlib import contextmanager
-from pathlib import Path
+import csv, io, json, logging
 
 products = [
     {"id": 1, "name": "Cable",    "category": "Electronics", "price": 499},
@@ -66,38 +63,3 @@ print("§5 __name__ =", __name__)   # '__main__' when run directly; the module's
 print("§6 print: added id=1")                       # simple: print — no level/source, always on
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logging.info("added id=%s", 1)                      # advanced: logging — levels + %s lazy formatting
-
-# §7  group + count by category          (senior: collections — builds Lab 2's group_by_category)
-simple = {}
-for p in products:                          # simple: manual dict-of-lists
-    simple.setdefault(p["category"], []).append(p["name"])
-groups = defaultdict(list)
-for p in products:                          # advanced: defaultdict — no setdefault, no KeyError
-    groups[p["category"]].append(p["name"])
-print("§7 group:", dict(groups), "| count:", Counter(p["category"] for p in products))   # Counter = count in one line
-
-# §8  total price of all products                           (senior: generator vs list)
-total_list = sum([p["price"] for p in products])   # simple: builds the whole list first
-total_gen  = sum(p["price"] for p in products)      # advanced: generator — () not [], one pass
-print("§8 sum:", total_list, "==", total_gen)
-
-# §9  guaranteed cleanup                                    (senior: context managers)
-print(" open")                              # simple: try/finally by hand
-try:
-    print(" ...writing...")
-finally:
-    print(" close")
-@contextmanager
-def saving(name):                           # advanced: a context manager hides the try/finally
-    print(" open", name)
-    try:
-        yield
-    finally:
-        print(" close", name)
-with saving("catalog.json"):                # real use: atomic_write (write tmp, then os.replace)
-    print(" ...writing...")
-
-# §10  build a file path                                    (senior: pathlib)
-simple = os.path.join("data", "products.csv")     # simple: string join
-advanced = Path("data") / "products.csv"           # advanced: pathlib, compose with /
-print("§10 path:", simple, "==", str(advanced), "| suffix:", advanced.suffix)

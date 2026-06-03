@@ -1,8 +1,9 @@
 """Module 3 — OOP, Decorators, Type Hints, FastAPI · CODE-ALONG
 
-Each concept TWICE: a SIMPLE way, then the ADVANCED/idiomatic upgrade.
+Each concept TWICE: a SIMPLE way, then the idiomatic upgrade.
     python3 codealong/module-3.py
-Stdlib only — FastAPI's idea is demoed with a 5-line router; the real thing is a comment.
+Covers base slides 21-27. Stdlib only — FastAPI's idea is demoed with a 5-line
+router; the real thing is a comment.
 """
 import functools
 import time
@@ -22,22 +23,14 @@ class Product:
     name: str
     price: float
 
-print("§1 plain   :", ProductPlain(1, "Cable", 499))
-print("§1 dataclass:", Product(1, "Cable", 499),
+print("§1 plain    :", ProductPlain(1, "Cable", 499))
+print("§1 dataclass :", Product(1, "Cable", 499),
       "| eq:", Product(1, "Cable", 499) == Product(1, "Cable", 499))
 
-# §1b  type hints are data tools can read                 (slide 23)
+# §2  type hints are data tools can read                  (slide 23)
 def price_with_tax(price: float) -> float:
     return round(price * 1.18, 2)
-print("§1b annotations:", price_with_tax.__annotations__)   # editors/mypy/FastAPI/Pydantic read these
-
-# §2  make it immutable + sortable                        (senior)
-@dataclass(frozen=True, order=True)          # frozen -> hashable; order -> sortable
-class FrozenProduct:
-    price: float
-    name: str
-items = [FrozenProduct(1299, "Mat"), FrozenProduct(499, "Cable")]
-print("§2 sorted:", [p.name for p in sorted(items)], "| set works:", len(set(items)))
+print("§2 annotations:", price_with_tax.__annotations__)   # editors/mypy/FastAPI/Pydantic read these
 
 # §3  wrap a function with logging                        (slide 24)
 def add(a, b):
@@ -58,7 +51,7 @@ def multiply(a, b):
     return a * b
 print("§3 advanced:", multiply(2, 3), "| name kept:", multiply.__name__)
 
-# §4  retry on failure                                    (slide 25 / senior)
+# §4  retry on failure                                    (slide 25)
 def retry3(func):                            # simple: a fixed decorator (always 3 tries)
     @functools.wraps(func)
     def wrapper(*a, **k):
