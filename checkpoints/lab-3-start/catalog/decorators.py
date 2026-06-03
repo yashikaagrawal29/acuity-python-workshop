@@ -25,6 +25,7 @@ def log_calls(func: F) -> F:
     def wrapper(*args, **kwargs):
         # TODO: log the call; run it; log the return.
         #       On exception: log it and re-raise (don't swallow).
+        # hint (notebook §7-8): result = func(*args, **kwargs); return result   (wraps keeps __name__)
         ...
 
     return wrapper  # type: ignore[return-value]
@@ -42,6 +43,7 @@ def retry(
         def wrapper(*args, **kwargs):
             # TODO: loop up to `times`; on a caught exception, log a warning and
             #       sleep(delay) between attempts; re-raise the last one if all fail.
+            # hint (notebook §9): for attempt in range(1, times + 1): try: return func(...) except ...: if attempt == times: raise
             ...
 
         return wrapper  # type: ignore[return-value]

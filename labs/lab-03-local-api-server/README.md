@@ -1,15 +1,16 @@
-# Lab 3 — Local API Server
+# Lab 3 — Decorators + Local API Server
 
 **Duration:** ~80 min · **Day:** 1 · **Module:** 3 (OOP, Decorators, Type Hints, FastAPI)
 
 ## Goal
-Wrap the catalog in a real HTTP API. Write two reusable decorators
-(`@retry`, `@log_calls`) that you'll keep using on Days 2, 3, and 4. Then
-spin up a local FastAPI server exposing `GET /products`, `POST /products`,
-`GET /products/{id}`, `DELETE /products/{id}`, plus a `GET /health` ping.
+**Decorators** are the real concept of Module 3 — a function that wraps another function
+and returns a new one. Write two you'll reuse all week (`@retry`, `@log_calls`). Then meet
+the payoff: **FastAPI is the same idea** — `@app.get("/products")` *registers* a function as
+a route just like your decorators *wrap* one. With that, you stand up a real HTTP API
+(`GET`/`POST`/`DELETE /products`, `GET /health`).
 
-This is the artifact every later day extends — by end of Day 4 your agent
-will be calling these routes.
+The decorator pattern returns on Day 3 (pytest fixtures) and Day 4 (agent tools); the
+server is the artifact your agent will call.
 
 ## You start with
 - Your Lab 2 working folder, **or** — to do Lab 3 standalone (no Labs 1–2) — a copy of `checkpoints/lab-3-start/`, which provides `models.py` + `storage.py` finished so you only build the two files below:
@@ -36,6 +37,14 @@ cp ../labs/lab-03-local-api-server/starter/*.py catalog/   # run from product-ca
 | `starter/server.py` | the five route bodies; map `CatalogError` → 404 (missing) / 409 (duplicate) / 400 (bad payload) |
 
 > Routes return `.to_dict()`, **not** the `Product` dataclass — FastAPI can't serialize a dataclass directly on Day 1. Day 2 fixes this by making `Product` a Pydantic model.
+
+## Hints (from the `module-3-simple` notebook)
+
+- **A decorator is just** `greet = log_calls(greet)` — take a function, wrap it, return the wrapper (§7).
+- **`@log_calls`** → `def wrapper(*args, **kwargs): ...; return func(*args, **kwargs)` (§7). Add `@functools.wraps(func)` so `__name__` survives (§8).
+- **`@retry`** → it's a decorator *with config*: loop `for attempt in range(1, times + 1)`, `try` the call, re-raise on the last attempt (§9).
+- **`@app.get("/products")`** → the **same pattern**: it *registers* the function as a route, exactly like the tiny `routes = {}` demo (§10). Return a `dict`/`list` and FastAPI makes it JSON.
+- **Errors** → wrap the catalog call in `try/except CatalogError` and `raise HTTPException(status_code=...)`.
 
 ## Steps
 

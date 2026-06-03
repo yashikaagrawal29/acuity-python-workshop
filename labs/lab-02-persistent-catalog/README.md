@@ -48,6 +48,16 @@ Then update `cli.py`: swap the inline `SEED` for `seed_products()` and add `save
 
 > **Why `to_dict` and `from_dict` aren't inverses:** JSON keeps `tags` as a list and reloads via `Product(**row)`; CSV flattens `tags` to a pipe-string and reloads via `from_dict`. Two formats, two paths — the spec test pins both.
 
+## Hints (from the `module-2-simple` notebook)
+
+- **`to_dict()`** → a dict of the fields (§3).
+- **`from_dict(row)`** → CSV values are strings: `int(row["id"])`, `float(row["price"])`, `row["tags"].split("|")` (§6).
+- **`save_json`** → `Path(path).write_text(json.dumps(rows, indent=2))` (§5).
+- **`load_json`** → `json.loads(Path(path).read_text())` (§5).
+- **`save_csv`** → `csv.DictWriter` + `writeheader()` + `writerow()`; open with `newline=""`.
+- **`load_csv`** → `csv.DictReader` → `Product.from_dict(row)` (§6).
+- **queries** → list comprehension with an `if`; `group_by_category` uses `defaultdict(list)`.
+
 ## Steps
 
 1. **Add the comprehension queries to `ProductCatalog`.** Keep them tiny — that's the point.

@@ -23,6 +23,9 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(messag
 app = FastAPI(title="Product Catalog", version="0.1.0")
 catalog = ProductCatalog(list(seed_products()))
 
+# hint (notebook §10): @app.get(path) REGISTERS this function as a route — same idea as the
+#                      tiny routes={} demo. Return a dict/list and FastAPI turns it into JSON.
+
 
 @app.get("/health")
 def health() -> dict:
@@ -39,6 +42,7 @@ def list_products() -> list[dict]:
 @app.get("/products/{product_id}")
 def get_product(product_id: int) -> dict:
     # TODO: return it, or HTTPException(404) on CatalogError
+    # hint: try: return catalog.get(product_id).to_dict()  except CatalogError as e: raise HTTPException(404, str(e))
     ...
 
 
@@ -46,6 +50,7 @@ def get_product(product_id: int) -> dict:
 def create_product(payload: dict) -> dict:
     # TODO: build a Product from payload (400 on bad payload),
     #       catalog.add (409 on duplicate), return the new product
+    # hint: Product(**payload) (bad payload -> HTTPException(400)); catalog.add (CatalogError -> 409)
     ...
 
 
