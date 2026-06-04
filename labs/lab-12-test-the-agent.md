@@ -194,7 +194,7 @@ $ pytest -q -m eval
 
 ---
 
-**End of Day 4 — and the workshop.** Your `product-catalog/` repo now contains:
+**End of Day 4 — and the workshop.** Your `my-catalog/` project now contains:
 
 - ✅ A Python catalog with classes, decorators, type hints (Day 1)
 - ✅ A FastAPI server + Pydantic-typed `APIClient` (Days 1-2)

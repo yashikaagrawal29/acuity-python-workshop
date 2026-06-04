@@ -25,7 +25,7 @@ class that every Day 2/3/4 lab will extend — not throwaway code.
 `starter/` holds the two files you build this lab. Copy them into your working `catalog/` package, then fill the bodies marked `# TODO` — the signatures, docstrings, and argparse wiring are given. The shape is decided; the logic is yours.
 
 ```bash
-cp ../labs/lab-01-product-foundation/starter/*.py catalog/   # run from product-catalog-work/
+cp ../labs/lab-01-product-foundation/starter/*.py catalog/   # run from my-catalog/
 ```
 
 | File | You write |

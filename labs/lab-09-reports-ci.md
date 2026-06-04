@@ -152,4 +152,4 @@ Artifacts: `pytest-report-3.10/report.html` (etc.) downloadable from the run pag
 ---
 
 **End of Day 3.** Your working folder is now the input for Day 4 — your
-checkpoint matches `checkpoints/day-4-start/`.
+checkpoint matches `project/checkpoints/day-4-start/`.

@@ -16,10 +16,7 @@ The decorator pattern returns on Day 3 (pytest fixtures) and Day 4 (agent tools)
 server is the artifact your agent will call.
 
 ## You start with
-- Your Lab 2 working folder, **or** — to do Lab 3 standalone (no Labs 1–2) — a copy of `checkpoints/lab-3-start/`, which provides `models.py` + `storage.py` finished so you only build the two files below:
-  ```bash
-  cp -r checkpoints/lab-3-start my-lab3 && cd my-lab3 && pip install -e ".[dev]"
-  ```
+- Your Lab 2 working folder (`my-catalog/`) — `models.py` + `storage.py` already built.
 
 ## You'll end with
 - `catalog/decorators.py` with `@retry(times, delay, exceptions)` and `@log_calls`
@@ -31,7 +28,7 @@ server is the artifact your agent will call.
 `starter/` holds the two new files for this lab. Copy them into your `catalog/` package and fill the `# TODO`s:
 
 ```bash
-cp ../labs/lab-03-local-api-server/starter/*.py catalog/   # run from product-catalog-work/
+cp ../labs/lab-03-local-api-server/starter/*.py catalog/   # run from my-catalog/
 ```
 
 | File | You write |
@@ -167,4 +164,4 @@ pytest -v        # all 26 Day-1 specs across lab 01–03
 ---
 
 **End of Day 1.** Your working folder is now the input for Day 2 — your
-checkpoint matches `checkpoints/day-2-start/`.
+checkpoint matches `project/checkpoints/day-2-start/`.

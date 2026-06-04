@@ -11,7 +11,7 @@ print green and you should be confident future edits won't silently
 break Day 1/2 behaviour.
 
 ## You start with
-- `checkpoints/day-3-start/` (Day 2 end-state) OR your own Lab 6 folder
+- `project/checkpoints/day-3-start/` (Day 2 end-state) OR your own Lab 6 folder
 
 ## You'll end with
 - `tests/conftest.py` with `sample_product` + `seeded_catalog` fixtures

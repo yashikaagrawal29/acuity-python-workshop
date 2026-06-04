@@ -1,16 +1,17 @@
 # Acuity Workshop — Trainer's Guide
 
 **Python, Automation Testing, JSON & Generative AI with Agentic AI**
-4 days · 24 hours · one connected `product-catalog/` project
+4 days · 24 hours · one connected project (`project/`)
 
 This folder contains everything needed to deliver the workshop:
 
 | Path | Purpose |
 |---|---|
 | `deck/day-N.md` | Marp slides (4 decks, one per day) |
-| `labs/lab-NN-*/` | 12 lab guides, in order. **Day 1** labs are folders: `README.md` guide + `starter/` ready-to-fill `.py` scaffolds. Days 2–4 are still flat `lab-NN-*.md` |
-| `product-catalog/` | Reference solution — the **end-state** of all 4 days |
-| `checkpoints/day-N-start/` | Catch-up baselines: what the project looks like at the **start** of Day N |
+| `labs/lab-NN-*/` | 12 lab guides, in order. **Days 1–2** (labs 01–06) are folders: `README.md` guide + `starter/` ready-to-fill `.py` scaffolds. Days 3–4 (labs 07–12) are still flat `lab-NN-*.md` |
+| `project/start-here/` | Day-1 baseline — the empty `catalog/` package students copy and build on all week |
+| `project/checkpoints/day-N-start/` | Catch-up baselines: what the project looks like at the **start** of Days 2–4 |
+| `project/solution/` | Reference solution — the **end-state** of all 4 days |
 | `deck/day-1-senior.md` + `labs/lab-0N-*/README-senior.md` | **Day-1 Senior Track** (optional) — deeper concepts + harder lab variants for experienced rooms |
 
 The source-of-truth course outline is `../trainer_docs/outline_v4.1-24hrs.md`. Every slide, lab, and code file traces back to it.
@@ -21,10 +22,10 @@ The source-of-truth course outline is `../trainer_docs/outline_v4.1-24hrs.md`. E
 
 Each 6-hour day = **3 modules × (~40 min concept + ~80 min lab)** plus breaks.
 
-1. Before the session: `cd product-catalog && uv sync` (or `pip install -e .`). Smoke-test the day's commands listed in each lab's "Expected output".
+1. Before the session: `cd project/solution && uv sync` (or `pip install -e .`). Smoke-test the day's commands listed in each lab's "Expected output".
 2. Open the deck: `marp deck/day-1.md --preview` (or render PDF with `--pdf`, PPTX with `--pptx`).
 3. For each module: present concept slides → land on the "Lab handoff" slide → participants open the matching lab guide.
-4. Anyone behind can copy `checkpoints/day-N-start/` over their working folder and rejoin.
+4. Anyone behind can copy `project/checkpoints/day-N-start/` over their working folder and rejoin.
 
 ---
 
@@ -38,7 +39,7 @@ python --version
 npm install -g @marp-team/marp-cli
 
 # 3. Install workshop dependencies
-cd product-catalog
+cd project/solution
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
@@ -52,18 +53,18 @@ pytest
 
 ## Participant setup (Day 1)
 
-Participants clone this repo and build their project in one working folder for the whole week — a copy of the Day-1 starting baseline, so the catch-up `checkpoints/` stay pristine.
+Participants clone this repo and build their project in one working folder for the whole week — a copy of the Day-1 baseline (`project/start-here/`), so the catch-up `project/checkpoints/` stay pristine.
 
 ```bash
-git clone <repo-url> acuity-workshop && cd acuity-workshop
+git clone <repo-url> acuity-workshop && cd acuity-workshop/client_docs
 python -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
-cp -r checkpoints/day-1-start product-catalog-work     # your folder for the week
-cd product-catalog-work
+cp -r project/start-here my-catalog                    # your folder for the week
+cd my-catalog
 pip install -e ".[dev]"
 pytest -q          # all specs SKIP (nothing built yet) — this is your scoreboard
 ```
 
-Then per lab (working from `product-catalog-work/`): copy the lab's `starter/` files into `catalog/`, fill the `# TODO`s, and run that lab's test (`pytest tests/test_lab01.py`). Fell behind? Copy the next `checkpoints/day-N-start/` over your folder to rejoin.
+Then per lab (working from `my-catalog/`): copy the lab's `starter/` files into `catalog/`, fill the `# TODO`s, and run that lab's test (`pytest tests/test_lab01.py`). Fell behind? Copy the next `project/checkpoints/day-N-start/` over your folder to rejoin.
 
 ---
 
@@ -113,4 +114,4 @@ Day 1 fundamentals run light for senior engineers. When the room is ahead, pull 
 
 **How to run it:** interleave each senior slide block after the matching base module, then send fast finishers to the senior lab variant. Render: `marp deck/day-1-senior.md --pdf -o out/day-1-senior.pdf`.
 
-**Safe by design:** the senior path is a *deeper route to the same `day-2-start` baseline*, not a fork. Anyone can copy `checkpoints/day-2-start/` to rejoin the canonical Day 2 — nothing built on the senior track is wasted.
+**Safe by design:** the senior path is a *deeper route to the same `day-2-start` baseline*, not a fork. Anyone can copy `project/checkpoints/day-2-start/` to rejoin the canonical Day 2 — nothing built on the senior track is wasted.

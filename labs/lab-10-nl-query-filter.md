@@ -10,7 +10,7 @@ yet, no tools. One LLM call. The lesson: **make the LLM speak your schema,
 not English you have to re-parse.**
 
 ## You start with
-- `checkpoints/day-4-start/` (Day 3 end-state) OR your own Lab 9 folder
+- `project/checkpoints/day-4-start/` (Day 3 end-state) OR your own Lab 9 folder
 - An OpenAI-compatible API key (set `OPENAI_API_KEY`)
 
 ## You'll end with

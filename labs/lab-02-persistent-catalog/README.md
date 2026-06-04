@@ -26,7 +26,7 @@ You're **extending your Lab 1 folder**, not starting fresh.
 **New file** — copy `starter/storage.py` into your `catalog/` package and fill the `# TODO`s:
 
 ```bash
-cp ../labs/lab-02-persistent-catalog/starter/storage.py catalog/   # run from product-catalog-work/
+cp ../labs/lab-02-persistent-catalog/starter/storage.py catalog/   # run from my-catalog/
 ```
 
 **Edits to your existing `models.py`** — there's no starter for these (they go *inside* classes you already wrote). Add and fill these stubs:

@@ -25,7 +25,7 @@ on Day 4**, so getting it clean matters.
 `starter/client.py` gives you the class skeleton — `__init__`, the `@retry`-decorated `_request` signature, and every CRUD method signature. Fill the bodies marked `# TODO`. The funnel pattern is decided; the logic is yours.
 
 ```bash
-cp ../labs/lab-05-api-client/starter/client.py catalog/   # run from product-catalog-work/
+cp ../labs/lab-05-api-client/starter/client.py catalog/   # run from my-catalog/
 ```
 
 | File | You write |
@@ -104,6 +104,16 @@ cp ../labs/lab-05-api-client/starter/client.py catalog/   # run from product-cat
 >>> c.create_product(ProductCreate(id=1, name="dup", category="x", price=1))
 APIError: 409: Product id 1 already exists
 ```
+
+## Make it pass
+
+Your done-signal is the spec — the REPL output above is the warm-up. It **skips** until `client.py` exists, then goes red → green.
+
+```bash
+pytest tests/test_lab05.py -v
+```
+
+Target: all of `TestAPIClient` green — typed returns, `APIError` on non-2xx, and `@retry` recovering from a transient failure (an injected fake session stands in for the server).
 
 ## Common pitfalls
 - Calling `requests.get(...)` instead of `self._session.request(...)` skips the session + the retry decorator. **Always** go through `_request`.

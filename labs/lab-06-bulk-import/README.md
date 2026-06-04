@@ -25,7 +25,7 @@ what failed and why**. This complete workflow becomes the
 `starter/` gives you the import scaffold and a ready-made CSV. Copy them in, then fill the three `# TODO`s in the loop (validate → create → record) and the health-check in `main()`. The report shape and CLI are decided; the loop logic is yours.
 
 ```bash
-cp ../labs/lab-06-bulk-import/starter/import_csv.py catalog/   # run from product-catalog-work/
+cp ../labs/lab-06-bulk-import/starter/import_csv.py catalog/   # run from my-catalog/
 cp ../labs/lab-06-bulk-import/starter/products.csv  data/      # the CSV lives under data/
 ```
 
@@ -123,6 +123,16 @@ report → import_report.json
 }
 ```
 
+## Make it pass
+
+Your done-signal is the spec — the stdout/report above is the warm-up. It **skips** until `import_csv.py` exists, then goes red → green.
+
+```bash
+pytest tests/test_lab06.py -v
+```
+
+Target: all of `TestImportCsv` green — the three buckets (`created` / `validation_errors` / `api_errors`) stay separated (a fake client stands in for the server).
+
 ## Common pitfalls
 - `csv.DictReader` returns *every* value as a string. Pydantic v2 coerces `"true"` → `True` and `"1299"` → `1299` for you, but `"not-a-number"` won't coerce and will surface a clean error. **Don't pre-clean rows** — let Pydantic be the bouncer.
 - Forgetting `start=2` on `enumerate` — your "row number" in the report becomes wrong by one because the header is row 1.
@@ -137,4 +147,4 @@ report → import_report.json
 ---
 
 **End of Day 2.** Your working folder is now the input for Day 3 — your
-checkpoint matches `checkpoints/day-3-start/`.
+checkpoint matches `project/checkpoints/day-3-start/`.

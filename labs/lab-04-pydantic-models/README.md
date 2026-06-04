@@ -12,7 +12,7 @@ read model. Same routes, same shapes, but now FastAPI validates inputs,
 auto-generates a richer `/docs`, and returns typed JSON.
 
 ## You start with
-- `checkpoints/day-2-start/` (Day 1 end-state) OR your own Lab 3 folder
+- `project/checkpoints/day-2-start/` (Day 1 end-state) OR your own Lab 3 folder
 
 ## You'll end with
 - `Product`, `ProductBase`, `ProductCreate`, `ProductUpdate` Pydantic models in `catalog/models.py`
@@ -25,7 +25,7 @@ auto-generates a richer `/docs`, and returns typed JSON.
 `starter/` holds the two files you upgrade this lab. Copy them over your working `catalog/` package, then fill the bodies marked `# TODO` — the imports, model skeletons, and route wiring are given. The shape is decided; the logic is yours.
 
 ```bash
-cp ../labs/lab-04-pydantic-models/starter/*.py catalog/   # run from product-catalog-work/
+cp ../labs/lab-04-pydantic-models/starter/*.py catalog/   # run from my-catalog/
 ```
 
 | File | You write |
@@ -119,6 +119,16 @@ $ curl -X PATCH http://localhost:8000/products/2 \
        -H 'Content-Type: application/json' -d '{"price":4999.0}'
 {"name":"Mechanical Keyboard","category":"Electronics","price":4999.0,"in_stock":true,"tags":["keyboard","mech"],"id":2}
 ```
+
+## Make it pass
+
+Your done-signal is the spec — the curl output above is the warm-up. It **skips** until you build the models, then goes red → green.
+
+```bash
+pytest tests/test_lab04.py -v
+```
+
+Target: all of `TestModels` + `TestServer` green (runs the API in-process — no server needed).
 
 ## Common pitfalls
 - Pydantic v2 syntax differs from v1. Use `model_dump()` (not `.dict()`), `model_validate()` (not `.parse_obj()`), `model_copy(update=...)`.
