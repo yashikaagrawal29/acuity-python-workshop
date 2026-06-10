@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: project/solution
     strategy:
       fail-fast: false
       matrix:
@@ -22,6 +25,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
+          cache-dependency-path: project/solution/pyproject.toml
 
       - name: Install dependencies
         run: |
@@ -44,15 +48,15 @@ jobs:
         with:
           name: pytest-report-${{ matrix.python-version }}
           path: |
-            report.html
-            coverage.xml
-            junit.xml
+            project/solution/report.html
+            project/solution/coverage.xml
+            project/solution/junit.xml
 
       - name: Upload coverage to summary
         if: always()
         run: |
           echo "### Coverage (Python ${{ matrix.python-version }})" >> $GITHUB_STEP_SUMMARY
           python -c "import xml.etree.ElementTree as ET; \
-            r = ET.parse('coverage.xml').getroot(); \
+            r = ET.parse('project/solution/coverage.xml').getroot(); \
             print(f\"Line: {float(r.get('line-rate'))*100:.1f}%  |  Branch: {float(r.get('branch-rate'))*100:.1f}%\")" \
             >> $GITHUB_STEP_SUMMARY
