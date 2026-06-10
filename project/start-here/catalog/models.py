@@ -34,43 +34,35 @@ class CatalogError(Exception):
 class ProductBase(BaseModel):
     """Shared fields between create / update / read."""
 
-    # TODO: declare the shared fields WITH constraints (module-4, §"Migrate to Pydantic"):
-    name:str = Field(min_length=1, max_length=120)
-    category:str = Field(min_length=1, max_length=60) 
-    price:float = Field(ge=0)            # ge allows 0; gt would forbid free items
-    in_stock:bool = True
-    tags:list[str] = Field(default_factory=list)
+    name: str = Field(min_length=1, max_length=120)
+    category: str = Field(min_length=1, max_length=60)
+    price: float = Field(ge=0)  # ge allows 0; gt would forbid free items
+    in_stock: bool = True
+    tags: list[str] = Field(default_factory=list)
 
-    # TODO: add a validator that turns a CSV-style "a|b|c" string into a list
-    #       (Lab 6 sends tags that way). module-4, §"@field_validator":
-    #
     @field_validator("tags", mode="before")
     @classmethod
     def _split_csv_tags(cls, v: object) -> object:
-          if isinstance(v, str):
-              return [t.strip() for t in v.split("|") if t.strip()]
-          return v
+        if isinstance(v, str):
+            return [t.strip() for t in v.split("|") if t.strip()]
+        return v
 
 
 class ProductCreate(ProductBase):
     """Payload for POST /products — caller must supply an id."""
 
-    id:int=Field(ge=1)
+    id: int = Field(ge=1)
 
 
 class ProductUpdate(BaseModel):
     """Payload for PATCH /products/{id} — every field optional."""
 
-    # TODO: model_config = ConfigDict(extra="forbid")   # reject unknown keys, don't ignore them
-    # TODO: every field Optional[...] = Field(default=None, <same constraints as ProductBase>)
-    #   name: Optional[str] = Field(default=None, min_length=1, max_length=120)
-    #   ... price, category, in_stock, tags
     model_config = ConfigDict(extra="forbid")
     name: Optional[str] = Field(default=None, min_length=1, max_length=120)
     category: Optional[str] = Field(default=None, min_length=1, max_length=60)
     price: Optional[float] = Field(default=None, ge=0)
-    in_stock: Optional[bool] = Field(default=None, default=True)
-    tags: Optional[list[str]] = Field(default=None, default_factory=list)
+    in_stock: Optional[bool] = Field(default=None)
+    tags: Optional[list[str]] = Field(default=None)
 
 class Product(ProductBase):
     """Catalog read model — includes the id."""
@@ -113,8 +105,6 @@ class ProductCatalog:
         return removed
 
     def update(self, product_id: int, patch: ProductUpdate) -> Product:
-        # TODO: fetch the existing product, apply only the fields the caller set,
-        #       store + return the merged product. module-4, §"Multiple models":
         existing = self.get(product_id)
         merged = existing.model_copy(update=patch.model_dump(exclude_unset=True))
         self._items[product_id] = merged
